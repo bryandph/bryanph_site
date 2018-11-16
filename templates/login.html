@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Login - BryanPH.com{% endblock %}
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='node_modules/bootstrap-social/bootstrap-social.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='node_modules/font-awesome/css/font-awesome.css')}}">
+{% endblock %}
+{% block header%}
+{% endblock %}
+{% block content %}
+<form class="form-signin" action="{{url_for('login')}}" method="POST">
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <div class="alert alert-danger" role="alert">
+    {{ messages[0] }}
+  </div>
+  {%endif%}
+  {%endwith%}
+  <img class="mb-4" src="{{ url_for('static', filename='images/bootstrap-solid.svg')}}" alt="" width="72" height="72">
+  <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+  <label for="inputEmail" class="sr-only">Email address</label>
+  {{ form.username(class='form-control', placeholder='Username')}}
+  <!-- <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus> -->
+  <label for="inputPassword" class="sr-only">Password</label>
+  {{ form.username(class='form-control', placeholder='Password')}}
+  <!-- <input type="password" id="inputPassword" class="form-control" placeholder="Password" required> -->
+  <div class="checkbox mb-3">
+    <label>
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+  </div>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+  <p class="mt-5 mb-3">Sign in with Facebook to register</p>
+</form>
+<div class="form-signin">
+  <a href="{{url_for('github.login', next=request.args.get('next'))}}">
+<button class="btn btn-block btn-social btn-lg btn-facebook">
+          <span class="fa fa-facebook"></span> Sign in with Facebook
+        </button>
+        </a>
+        </div>
+{% endblock %}
+{% block footer%}
+{% endblock %}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='node_modules/bootstrap/dist/css/bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css')}}">
+  <title>{% block title %}{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="BryanPH Personal Site">
+  <meta name="author" content="Bryan Prather-Huff">
+  <link rel="apple-touch-icon" sizes="57x57" href="{{ url_for('static', filename='favicon.ico/apple-icon-57x57.png')}}">
+  <link rel="apple-touch-icon" sizes="60x60" href="{{ url_for('static', filename='favicon.ico/apple-icon-60x60.png')}}">
+  <link rel="apple-touch-icon" sizes="72x72" href="{{ url_for('static', filename='favicon.ico/apple-icon-72x72.png')}}">
+  <link rel="apple-touch-icon" sizes="76x76" href="{{ url_for('static', filename='favicon.ico/apple-icon-76x76.png')}}">
+  <link rel="apple-touch-icon" sizes="114x114" href="{{ url_for('static', filename='favicon.ico/apple-icon-114x114.png')}}">
+  <link rel="apple-touch-icon" sizes="120x120" href="{{ url_for('static', filename='favicon.ico/apple-icon-120x120.png')}}">
+  <link rel="apple-touch-icon" sizes="144x144" href="{{ url_for('static', filename='favicon.ico/apple-icon-144x144.png')}}">
+  <link rel="apple-touch-icon" sizes="152x152" href="{{ url_for('static', filename='favicon.ico/apple-icon-152x152.png')}}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='favicon.ico/apple-icon-180x180.png')}}">
+  <link rel="icon" type="image/png" sizes="192x192" href="{{ url_for('static', filename='favicon.ico/android-icon-192x192.png')}}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon.ico/favicon-32x32.png')}}">
+  <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='favicon.ico/favicon-96x96.png')}}">
+  <link rel="manifest" href="{{ url_for('static', filename='favicon.ico/manifest.json')}}">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="{{ url_for('static', filename='favicon.ico/ms-icon-144x144.png')}}">
+  {% endblock %}
+</head>
+
+<body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column rounded" style="background:rgba(255,255,255,0.05)">
+      {% block header %}
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <div class="alert alert-info alert-dismissable fade show" role="alert">
+        {{ messages[0] }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+
+          <span aria-hidden="true">&times;</span>
+
+        </button>
+      </div>
+      {%endif%}
+      {%endwith%}
+
+      <header class="masthead mb-auto">
+        <div class="inner">
+          {% if fname %}
+          <h3 class="masthead-brand">BryanPH <small style="color:rgb(255,255,255)"><small>welcomes <strong><em>{{ fname }}</em></strong></small></small></h3>
+          <nav class="nav nav-masthead justify-content-center pt-3">
+            {% else %}
+            <h3 class="masthead-brand">BryanPH.com</h3>
+            <nav class="nav nav-masthead justify-content-center">
+              {% endif %}
+              {% for page in pages %}
+              {% if request.path == url_for(page) %}
+              <a class="nav-link active" href="{{url_for(page)}}">{{pagesDict[page]}}</a>
+              {% else %}
+              <a class="nav-link" href="{{url_for(page)}}">{{pagesDict[page]}}</a>
+              {% endif %}
+              {% endfor %}
+
+              {% if fname %}
+              <!-- <a class="nav-link pl-10" href="{{url_for('index')}}">Hello {{ fname }}</a> -->
+              <a class="nav-link" href="{{url_for('logout')}}"><button type="button" class="btn btn-dark">Logout</button></a>
+              {% else %}
+              <a class="nav-link" href="{{url_for('login')}}"><button type="button" class="btn btn-dark">Login</button></a>
+              {% endif %}
+            </nav>
+        </div>
+      </header>
+      {% endblock %}
+
+
+      <div id="content">
+        {% block content %}
+        {% endblock %}
+      </div>
+
+      {% block footer %}
+      <footer class="mastfoot mt-auto">
+        <div class="inner">
+          <p>Bryan Prather-Huff - 2018</p>
+        </div>
+      </footer>
+      {% endblock %}
+
+    </div>
+</body>
+
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="{{ url_for('static', filename='node_modules/jquery/dist/jquery.slim.min.js')}}"></script>
+<script src="{{ url_for('static', filename='node_modules/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+
+</html>

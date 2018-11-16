@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}BryanPH.com{% endblock %}
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='node_modules/font-awesome/css/font-awesome.css')}}">
+{% endblock %}
+{% block header%}
+{{super()}}
+{% endblock %}
+{% block content %}
+<main role="main" class="inner cover">
+  <div class="jumbotron" style="background:rgba(0,0,0,0.40);padding-top:2rem;padding-bottom:1rem;">
+    <div style="padding-bottom:1rem">
+      <h1 class="cover-heading">Bryan Prather-Huff</h1>
+      <p class="lead"><i class="fa fa-code"></i> Computer Scientist <strong>|</strong> Security Engineer <i class="fa fa-bug"></i></p>
+    </div>
+
+    <div class="jumbotron wordcloud-wrapper">
+      <div class="row">
+        <div class="col" id="wordcloud">
+          <img src="" alt="">
+      </div>
+    </div>
+  </div>
+  </div>
+</main>
+<script src="{{ url_for('static', filename='js/bundle.js')}}"></script>
+{% endblock %}
+{% block footer%}
+{{super()}}
+{% endblock %}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% block head %}
+  <meta charset="utf-8">
+  <title>{% block title %}{% endblock %}</title>
+  <meta name="description" content="{{ self.title }}">
+  <link href="https://fonts.googleapis.com/css?family=Oswald:700" rel="stylesheet">
+  <style>
+  div {
+    text-align: center;
+  }
+
+  h1{
+    font-family: 'Oswald', sans-serif;
+    font-size: 1000%
+  }
+
+  h2{
+    font-family: 'Oswald', sans-serif;
+  }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+  {% endblock %}
+</head>
+
+<body>
+  <div id="content">
+    {% block content %}
+    {% endblock %}
+  </div>
+</body>
+</html>
