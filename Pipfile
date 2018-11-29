@@ -7,9 +7,10 @@ name = "pypi"
 flask = "*"
 flask-sqlalchemy = "*"
 python-dotenv = "*"
-flask-dance = {extras = ["sqla"], version = "*"}
+flask-dance = {extras = ["sqla"],version = "*"}
 flask-login = "*"
 uwsgi = "*"
+ipython = "*"
 
 [dev-packages]
 

@@ -5,7 +5,7 @@ from flask import Flask, redirect, url_for, flash, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.contrib.fixers import ProxyFix
 from sqlalchemy.orm.exc import NoResultFound
-from flask_dance.contrib.github import make_github_blueprint, github
+from flask_dance.contrib.facebook import make_facebook_blueprint, facebook
 from flask_dance.consumer.backend.sqla import OAuthConsumerMixin, SQLAlchemyBackend
 from flask_dance.consumer import oauth_authorized, oauth_error
 from flask_login import (LoginManager, UserMixin, current_user, login_required, login_user, logout_user)
@@ -18,11 +18,11 @@ app.debug = True
 app.config.from_object('config.DevelopmentConfig')
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 app.wsgi_app = ProxyFix(app.wsgi_app)
-blueprint = make_github_blueprint(
-    client_id="42ee1ce8f2ab52286c92",
-    client_secret="7c32e5435569300126a1c6114506e15579b54c9f",
+blueprint = make_facebook_blueprint(
+    client_id="251179422231132",
+    client_secret="b35dcead18dfdd6e340c25013922997c",
 )
-app.register_blueprint(blueprint, url_prefix="/login_oauth")
+app.register_blueprint(blueprint, url_prefix="/login_oauth", base_url="https://graph.facebook.com/", authorization_url="https://www.facebook.com/dialog/oauth", token_url="https://graph.facebook.com/oauth/access_token")
 
 
 login_manager = LoginManager()
@@ -50,45 +50,47 @@ def render_nav(user_auth):
 
 # create/login local user on successful OAuth login
 @oauth_authorized.connect_via(blueprint)
-def github_logged_in(blueprint, token):
+def facebook_logged_in(blueprint, token):
     if not token:
-        flash("Failed to log in with GitHub.", category="error")
+        print("LMAO", file=sys.stderr)
+        flash("Failed to log in with Facebook.", category="error")
         return False
 
-    resp = blueprint.session.get("/user")
+    resp = blueprint.session.get("/oauth2/v2/userinfo")
     if not resp.ok:
-        msg = "Failed to fetch user info from GitHub."
+        print("Failed to fetch user info from Facebook.", file=sys.stderr)
+        msg = "Failed to fetch user info from Facebook."
         flash(msg, category="error")
         return False
 
-    github_info = resp.json()
-    github_user_id = str(github_info["id"])
+    facebook_info = resp.json()
+    facebook_user_id = str(facebook_info["id"])
 
     # Find this OAuth token in the database, or create it
     query = OAuth.query.filter_by(
         provider=blueprint.name,
-        provider_user_id=github_user_id,
+        provider_user_id=facebook_user_id,
     )
     try:
         oauth = query.one()
     except NoResultFound:
         oauth = OAuth(
             provider=blueprint.name,
-            provider_user_id=github_user_id,
+            provider_user_id=facebook_user_id,
             token=token,
         )
 
     if oauth.user:
         login_user(oauth.user)
-        flash("Successfully signed in with GitHub.")
+        flash("Successfully signed in with Facebook.")
 
     else:
         # Create a new local user account for this user
         user = User(
             # Remember that `email` can be None, if the user declines
-            # to publish their email address on GitHub!
-            email=github_info["email"],
-            name=github_info["name"],
+            # to publish their email address on Facebook!
+            email=facebook_info["email"],
+            name=facebook_info["name"],
         )
         # Associate the new local user account with the OAuth token
         oauth.user = user
@@ -97,14 +99,14 @@ def github_logged_in(blueprint, token):
         db.session.commit()
         # Log in the new local user account
         login_user(user)
-        flash("Successfully signed in with GitHub.")
+        flash("Successfully signed in with Facebook.")
 
     # Disable Flask-Dance's default behavior for saving the OAuth token
     return False
 
 # notify on OAuth provider error
 @oauth_error.connect_via(blueprint)
-def github_error(blueprint, error, error_description=None, error_uri='login'):
+def facebook_error(blueprint, error, error_description=None, error_uri='login'):
     msg = (
         "OAuth error from {name}! "
         "error={error} description={description} uri={uri}"
