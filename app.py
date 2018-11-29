@@ -12,6 +12,9 @@ from flask_login import (LoginManager, UserMixin, current_user, login_required, 
 from wtforms import Form, PasswordField, StringField, validators, SubmitField
 from models import *
 
+def read_secret():
+    with open('api_secret.txt', 'r') as f:
+        return [i.strip() for i in f.readlines()]
 
 app = Flask(__name__)
 app.debug = True
@@ -19,8 +22,8 @@ app.config.from_object('config.DevelopmentConfig')
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 app.wsgi_app = ProxyFix(app.wsgi_app)
 blueprint = make_facebook_blueprint(
-    client_id="251179422231132",
-    client_secret="b35dcead18dfdd6e340c25013922997c",
+    client_id=read_secret()[0],
+    client_secret=read_secret()[1],
 )
 app.register_blueprint(blueprint, url_prefix="/login_oauth", base_url="https://graph.facebook.com/", authorization_url="https://www.facebook.com/dialog/oauth", token_url="https://graph.facebook.com/oauth/access_token")
 
