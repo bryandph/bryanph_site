@@ -11,6 +11,8 @@ flask-dance = {extras = ["sqla"],version = "*"}
 flask-login = "*"
 uwsgi = "*"
 ipython = "*"
+wtforms = "*"
+blinker = "*"
 
 [dev-packages]
 
