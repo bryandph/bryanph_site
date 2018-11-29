@@ -3,6 +3,7 @@
 {% block head %}
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='node_modules/font-awesome/css/font-awesome.css')}}">
 {% endblock %}
 {% block header%}
 {{super()}}
@@ -11,18 +12,16 @@
 <main role="main" class="inner cover">
   <div class="container" style="padding-top:1rem;">
     <div class="row">
-      <div class="col-xs-12">
-        <h2 class="display-4">Contact</h2>
-        <div class="text-left jumbotron" style="background:rgba(0,0,0,0.40);padding-top:1rem;padding-bottom:1rem;margin-bottom:0;">
-          <p>Bryan lives in Iowa City, Iowa, USA.</p>
-          <p>You can email him at <kbd>bryan {at} pratherhuff.com</kbd></p>
-          <div class="container">
-            <div class="row">
-              <div class="col"><a class="btn btn-social-icon btn-facebook" href="https://www.facebook.com/bryan.prather.huff"><span class="fa fa-facebook"></span></a></div>
-              <div class="col"><a class="btn btn-social-icon btn-github" href="https://github.com/bryandph"><span class="fa fa-github"></span></a></div>
-              <div class="col"><a class="btn btn-social-icon btn-instagram" href="https://www.instagram.com/bryandph/"><span class="fa fa-instagram"></span></a></div>
-              <div class="col"><a class="btn btn-social-icon btn-reddit" href="https://www.reddit.com/user/bryandph/"><span class="fa fa-reddit"></span></a></div>
-            </div>
+      <h2 class="display-4">Contact</h2>
+      <div class="text-left jumbotron" style="background:rgba(0,0,0,0.40);padding-top:1rem;padding-bottom:1rem;margin-bottom:0;">
+        <p>Bryan lives in Iowa City, Iowa, USA.</p>
+        <p>You can email him at <kbd>bryan {at} pratherhuff.com</kbd></p>
+        <div class="container">
+          <div class="row">
+            <div class="col"><a class="btn btn-social-icon btn-facebook" href="https://www.facebook.com/bryan.prather.huff"><span class="fa fa-facebook"></span></a></div>
+            <div class="col"><a class="btn btn-social-icon btn-github" href="https://github.com/bryandph"><span class="fa fa-github"></span></a></div>
+            <div class="col"><a class="btn btn-social-icon btn-instagram" href="https://www.instagram.com/bryandph/"><span class="fa fa-instagram"></span></a></div>
+            <div class="col"><a class="btn btn-social-icon btn-reddit" href="https://www.reddit.com/user/bryandph/"><span class="fa fa-reddit"></span></a></div>
           </div>
         </div>
       </div>
